@@ -1,0 +1,703 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Inicio - Bicentenario</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600&family=Roboto&display=swap" rel="stylesheet"> 
+
+        <!-- Icon Font Stylesheet -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- Libraries Stylesheet -->
+        <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+        <link href="{% static 'lib/lightbox/css/lightbox.min.css' %}" rel="stylesheet">
+
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    </head>
+
+    <body>
+
+        <!-- Spinner Start -->
+        <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
+            <div class="spinner-grow text-primary" role="status"></div>
+        </div>
+        <!-- Spinner End -->
+
+
+        <!-- Navbar start -->
+        <div class="container-fluid fixed-top px-0">
+            <div class="w-100 px-0">
+                <div class="topbar">
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-md-8">
+                            <div class="topbar-info d-flex flex-wrap">
+                                <a href="#" class="text-light me-4"><i class="fas fa-envelope text-white me-2"></i>vargasgarcia194@gmail.com</a>
+                                <a href="#" class="text-light"><i class="fas fa-phone-alt text-white me-2"></i>+591 60179791</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="topbar-icon d-flex align-items-center justify-content-end">
+                                <a href="#" class="btn-square text-white me-2"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" class="btn-square text-white me-2"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="btn-square text-white me-2"><i class="fab fa-instagram"></i></a>
+                                <a href="#" class="btn-square text-white me-2"><i class="fab fa-pinterest"></i></a>
+                                <a href="#" class="btn-square text-white me-0"><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <nav class="navbar navbar-light bg-light navbar-expand-xl">
+                    <a href="/" class="navbar-brand ms-3">
+                        <img src="{% static 'img/logo.png' %}" alt="Bicentenario Logo" style="height: 50px;">
+                    </a>
+                    <button class="navbar-toggler py-2 px-3 me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars text-primary"></span>
+                    </button>
+                    <div class="collapse navbar-collapse bg-light" id="navbarCollapse">
+                        {% if user.is_authenticated %}
+                            {% if user.es_eventos %}
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Eventos</a>
+                                    <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                        <a href="/academicoscrud" class="dropdown-item">Academicos</a>
+                                        <a href="/culturalescrud" class="dropdown-item">Culturales</a>
+                                        <a href="/gastronomicoscrud" class="dropdown-item">Gastronomicos</a>
+                                        <a href="/deportivoscrud" class="dropdown-item">Deportivos</a>
+                                        <a href="/feriacrud" class="dropdown-item">Feria</a>
+                                        <a href="/socialcrud" class="dropdown-item">Social</a>
+                                    </div>
+                                </div>
+
+                            {% endif %}
+                            {% if user.es_cultural%}
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Historia</a>
+                                    <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                        <a href="/batallas" class="dropdown-item">Batallas</a>
+                                        <a href="/independencias" class="dropdown-item">Independencias</a>
+                                        <a href="/personajes" class="dropdown-item">Personajes</a>
+                                    </div>
+                                </div>
+                                <a href="/presidentes" class="nav-item nav-link">Presidentes</a>
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Cultura</a>
+                                    <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                        <a href="/museos" class="dropdown-item">Museos</a>
+                                        <a href="/artes" class="dropdown-item">Artes y Artesanias</a>
+                                        <a href="/turismo" class="dropdown-item">Turismo</a>
+                                        <a href="/etnias" class="dropdown-item">Etnias</a>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <div class="d-flex align-items-center flex-nowrap pt-xl-0" style="margin-left: 15px;">
+                                <a href="/logout" class="btn-hover-bg btn btn-primary text-white py-2 px-4 me-3">Cerrar Sesion</a>
+                            </div>
+                        {% else %}
+                            <div class="navbar-nav ms-auto">
+                                <a href="/" class="nav-item nav-link">Inicio</a>
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Bicentenario</a>
+                                    <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                        <a href="/consejo" class="dropdown-item">Consejo Nacional</a>
+                                        <a href="{% static 'documentos/PLAN-EST-NAL-BICENTENARIO.pdf' %}" class="dropdown-item" target="_blank">
+                                            Plan Estratégico
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Historia</a>
+                                    <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                        <a href="/batallas" class="dropdown-item">Batallas</a>
+                                        <a href="/independencias" class="dropdown-item">Independencias</a>
+                                        <a href="/personajes" class="dropdown-item">Personajes</a>
+                                    </div>
+                                </div>
+                                <a href="/presidentes" class="nav-item nav-link">Presidentes</a>
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Cultura</a>
+                                    <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                        <a href="/museos" class="dropdown-item">Museos</a>
+                                        <a href="/artes" class="dropdown-item">Artes y Artesanias</a>
+                                        <a href="/turismo" class="dropdown-item">Turismo</a>
+                                        <a href="/etnias" class="dropdown-item">Etnias</a>
+                                    </div>
+                                </div>
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Eventos</a>
+                                    <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                        <a href="/academicos" class="dropdown-item">Academicos</a>
+                                        <a href="/culturales" class="dropdown-item">Culturales</a>
+                                        <a href="/gastronomicos" class="dropdown-item">Gastronomicos</a>
+                                        <a href="/deportivos" class="dropdown-item">Deportivos</a>
+                                        <a href="/feria" class="dropdown-item">Feria</a>
+                                        <a href="/social" class="dropdown-item">Social</a>
+                                    </div>
+                                </div>
+                                <a href="/noticias" class="nav-item nav-link">Noticias</a>
+                                <a href="/convocatorias" class="nav-item nav-link">Convocatorias</a>
+                                <a href="/agenda" class="nav-item nav-link active">Agenda</a>
+                                <a href="/contactos" class="nav-item nav-link">Contactos</a>
+                            </div>
+                            <div class="d-flex align-items-center flex-nowrap pt-xl-0" style="margin-left: 15px;">
+                                <a href="/login" class="btn-hover-bg btn btn-primary text-white py-2 px-4 me-3">Login</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- Navbar End -->
+
+        <!-- Header Start -->
+        <div class="container-fluid bg-breadcrumb">
+            <div class="container text-center py-5" style="max-width: 900px;">
+                <h3 class="text-white display-3 mb-4">Agenda</h1>
+                <p class="fs-5 text-white mb-4">Encuentra tu tiempo disponible para asistir, esta es nuestra agenda del bicentenario</p>
+                <ol class="breadcrumb justify-content-center mb-0">
+                    <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+                    <li class="breadcrumb-item active text-white">Agenda</li>
+                </ol>    
+            </div>
+        </div>
+        <!-- Header End -->
+        
+        <div class="container py-5">
+            <!-- Filtros -->
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Año</h5>
+                            <select class="form-select" id="year-filter">
+                                {% for year in años_filtro %}
+                                    <option value="?year={{ year }}{% if selected_month %}&month={{ selected_month }}{% endif %}" 
+                                            {% if year == selected_year %}selected{% endif %}>
+                                        {{ year }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Mes</h5>
+                            <select class="form-select" id="month-filter">
+                                <option value="?year={{ selected_year }}">Todos los meses</option>
+                                {% for mes in meses_filtro %}
+                                    <option value="?year={{ selected_year }}&month={{ mes.value }}" 
+                                            {% if mes.selected %}selected{% endif %}>
+                                        {{ mes.nombre }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Categoría</h5>
+                            <select class="form-select" id="category-filter">
+                                <option value="">Todas las categorías</option>
+                                {% for value, label in categorias %}
+                                    <option value="{{ value }}">{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Leyenda de colores -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2 text-muted">Leyenda:</h6>
+                            <div class="d-flex flex-wrap">
+                                {% for value, label in categorias %}
+                                    <div class="me-3 mb-2">
+                                        <span class="leyenda-color bg-{{ value|lower }}"></span>
+                                        <span class="small">{{ label }}</span>
+                                    </div>
+                                {% endfor %}
+                                <div class="me-3 mb-2">
+                                    <span class="leyenda-color bg-secondary opacity-50"></span>
+                                    <span class="small">Evento pasado</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Calendario (solo si hay mes seleccionado) -->
+            {% if calendar %}
+                <div class="card mb-5">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">{{ calendar.month_name }} {{ selected_year }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered calendar-table">
+                                <thead>
+                                    <tr>
+                                        <th>Lunes</th>
+                                        <th>Martes</th>
+                                        <th>Miércoles</th>
+                                        <th>Jueves</th>
+                                        <th>Viernes</th>
+                                        <th>Sábado</th>
+                                        <th>Domingo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for week in calendar.weeks %}
+                                        <tr>
+                                            {% for day in week %}
+                                                <td class="{% if day.day == 0 %}empty-day{% elif day.day == hoy.day and selected_month == hoy.month and selected_year == hoy.year %}today{% else %}calendar-day{% endif %}
+                                                    {% for event in day.events %}{% if event.pasado %} past-day{% endif %}{% endfor %}">
+                                                    {% if day.day != 0 %}
+                                                        <div class="day-number">{{ day.day }}</div>
+                                                        <div class="day-events">
+                                                            {% for event in day.events %}
+                                                                <div class="event-dot bg-{{ event.color }}{% if event.pasado %} opacity-50{% endif %}" 
+                                                                     title="{{ event.titulo }} ({{ event.categoria }})"
+                                                                     data-event-id="{{ event.id }}"></div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% endif %}
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        
+            <!-- Listado de eventos -->
+            <div id="agenda-container">
+                {% if not eventos_por_mes %}
+                    <div class="alert alert-info">No hay eventos registrados.</div>
+                {% else %}
+                    {% for mes in eventos_por_mes %}
+                        <div class="month-section mb-5 {% if selected_month and mes.mes_num == selected_month and mes.anio == selected_year %}active{% elif not selected_month and mes.anio == selected_year %}active{% endif %}">
+                            <h2 class="month-title mb-4">{{ mes.nombre_mes }} {{ mes.anio }}</h2>
+                            
+                            <div class="row">
+                                {% for evento in mes.eventos %}
+                                    <div class="col-md-6 mb-4 event-item" 
+                                         data-category="{{ evento.categoria|lower }}"
+                                         data-month="{{ mes.mes_num }}"
+                                         data-year="{{ mes.anio }}">
+                                        <div class="card event-card h-100 border-{{ evento.categoria|lower }} shadow-sm {% if evento.fecha_inicio.date < hoy %}text-muted{% endif %}">
+                                            <div class="card-header bg-{{ evento.categoria_sin_acentos|lower }} {% if evento.fecha_inicio.date < hoy %}opacity-75{% endif %} text-white">
+                                                <h5 class="card-title mb-0">
+                                                    {{ evento.titulo }}
+                                                    <span class="badge bg-light text-dark ms-2">
+                                                        {{ evento.fecha_inicio|date:"d/m/Y" }}
+                                                    </span>
+                                                </h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="event-details mb-3">
+                                                    <div class="event-detail mb-2">
+                                                        <i class="bi bi-clock me-2"></i>
+                                                        <span>
+                                                            {{ evento.fecha_inicio|date:"H:i" }} - 
+                                                            {{ evento.fecha_fin|date:"H:i" }}
+                                                        </span>
+                                                    </div>
+                                                    
+                                                    <div class="event-detail mb-2">
+                                                        <i class="bi bi-geo-alt me-2"></i>
+                                                        <span>{{ evento.lugar.nombre }}, {{ evento.lugar.get_departamento_display }}</span>
+                                                    </div>
+                                                    
+                                                    <div class="event-detail mb-2">
+                                                        <i class="bi bi-laptop me-2"></i>
+                                                        <span>{{ evento.get_modalidad_display }}</span>
+                                                    </div>
+                                                    
+                                                    <div class="event-detail">
+                                                        <i class="bi bi-people me-2"></i>
+                                                        <span>{{ evento.get_tipo_publico_display }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer bg-transparent">
+                                                <span class="badge bg-{{ evento.categoria_sin_acentos|lower }}">
+                                                    {{ evento.get_categoria_display }}
+                                                </span>
+                                                {% if evento.fecha_inicio.date < hoy %}
+                                                    <span class="badge bg-secondary float-end">
+                                                        Pasado
+                                                    </span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        
+        <style>
+            .calendar-table {
+                table-layout: fixed;
+                width: 100%;
+                margin-bottom: 0;
+            }
+            
+            .calendar-day, .empty-day {
+                height: 100px;
+                vertical-align: top;
+                position: relative;
+                padding: 2px;
+            }
+            
+            .empty-day {
+                background-color: #f8f9fa;
+                border: 1px solid #dee2e6;
+            }
+            
+            .calendar-day {
+                border: 1px solid #dee2e6;
+            }
+            
+            .today {
+                background-color: #e3f2fd;
+                font-weight: bold;
+            }
+            
+            .past-day {
+                background-color: #f8f9fa;
+                opacity: 0.8;
+            }
+            
+            .day-number {
+                text-align: right;
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+            
+            .day-events {
+                min-height: 20px;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 3px;
+                justify-content: center;
+            }
+            
+            .event-dot {
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                cursor: pointer;
+                display: inline-block;
+                border: 1px solid white;
+            }
+            
+            .event-dot:hover {
+                transform: scale(1.3);
+            }
+            
+            /* Colores para categorías */
+            .bg-cultural { background-color: #f39c12; }
+            .bg-deportivo { background-color: #27ae60; }
+            .bg-gastronomico { background-color: #e74c3c; }
+            .bg-academico { background-color: #3498db; }
+            .bg-feria { background-color: #9b59b6; }
+            .bg-social { background-color: #1abc9c; }
+            
+            .border-cultural { border-left: 4px solid #f39c12; }
+            .border-deportivo { border-left: 4px solid #27ae60; }
+            .border-gastronomico { border-left: 4px solid #e74c3c; }
+            .border-academico { border-left: 4px solid #3498db; }
+            .border-feria { border-left: 4px solid #9b59b6; }
+            .border-social { border-left: 4px solid #1abc9c; }
+            
+            .month-section {
+                display: none;
+            }
+            
+            .month-section.active {
+                display: block;
+            }
+            
+            .leyenda-color {
+                width: 15px;
+                height: 15px;
+                border-radius: 50%;
+                display: inline-block;
+                margin-right: 5px;
+                vertical-align: middle;
+            }
+            
+            .highlight {
+                animation: highlight 2s;
+            }
+            
+            @keyframes highlight {
+                0% { box-shadow: 0 0 0 0 rgba(255, 255, 0, 0.7); }
+                50% { box-shadow: 0 0 0 10px rgba(255, 255, 0, 0); }
+                100% { box-shadow: 0 0 0 0 rgba(255, 255, 0, 0); }
+            }
+        </style>
+        
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Filtro por año
+            const yearFilter = document.getElementById('year-filter');
+            yearFilter.addEventListener('change', function() {
+                const url = new URL(window.location.href);
+                url.searchParams.set('year', this.value);
+                // Mantener el mes si estaba seleccionado
+                if ({{ selected_month|default:'null' }} !== null) {
+                    url.searchParams.set('month', {{ selected_month|default:'null' }});
+                } else {
+                    url.searchParams.delete('month');
+                }
+                window.location.href = url.toString();
+            });
+            
+            // Filtro por mes
+            const monthFilter = document.getElementById('month-filter');
+            monthFilter.addEventListener('change', function() {
+                const url = new URL(window.location.href);
+                if (this.value.includes('month=')) {
+                    window.location.href = this.value;
+                } else {
+                    url.searchParams.delete('month');
+                    window.location.href = url.toString();
+                }
+            });
+            
+            // Filtro por categoría
+            const categoryFilter = document.getElementById('category-filter');
+            categoryFilter.addEventListener('change', function() {
+                const category = this.value.toLowerCase();
+                const eventItems = document.querySelectorAll('.event-item');
+                const eventDots = document.querySelectorAll('.event-dot');
+                
+                eventItems.forEach(item => {
+                    if (category === '' || item.dataset.category === category) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                
+                eventDots.forEach(dot => {
+                    if (category === '' || dot.classList.contains(`bg-${category}`)) {
+                        dot.style.display = 'inline-block';
+                    } else {
+                        dot.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Scroll a evento cuando se hace clic en el calendario
+            document.querySelectorAll('.event-dot').forEach(dot => {
+                dot.addEventListener('click', function() {
+                    const eventId = this.dataset.eventId;
+                    const eventElement = document.querySelector(`[data-event-id="${eventId}"]`);
+                    if (eventElement) {
+                        eventElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        eventElement.classList.add('highlight');
+                        setTimeout(() => {
+                            eventElement.classList.remove('highlight');
+                        }, 2000);
+                    }
+                });
+            });
+            
+            // Mostrar solo el mes/año seleccionado
+            const monthSections = document.querySelectorAll('.month-section');
+            const selectedYear = {{ selected_year }};
+            const selectedMonth = {{ selected_month|default:'null' }};
+            
+            monthSections.forEach(section => {
+                const eventItem = section.querySelector('.event-item');
+                if (eventItem) {
+                    const itemYear = parseInt(eventItem.dataset.year);
+                    const itemMonth = parseInt(eventItem.dataset.month);
+                    
+                    if ((!selectedMonth && itemYear === selectedYear) || 
+                        (itemYear === selectedYear && itemMonth === selectedMonth)) {
+                        section.style.display = 'block';
+                    } else {
+                        section.style.display = 'none';
+                    }
+                }
+            });
+        });
+        </script>
+
+        <!-- Footer Start 
+        <div class="container-fluid footer bg-dark text-body py-5">
+            <div class="container py-5">
+                <div class="row g-5">
+                    <div class="col-md-6 col-lg-6 col-xl-3">
+                        <div class="footer-item">
+                            <h4 class="mb-4 text-white">Newsletter</h4>
+                            <p class="mb-4">Dolor amet sit justo amet elitr clita ipsum elitr est.Lorem ipsum dolor sit amet, consectetur adipiscing elit consectetur adipiscing elit.</p>
+                            <div class="position-relative mx-auto">
+                                <input class="form-control border-0 bg-secondary w-100 py-3 ps-4 pe-5" type="text" placeholder="Enter your email">
+                                <button type="button" class="btn-hover-bg btn btn-primary position-absolute top-0 end-0 py-2 mt-2 me-2">SignUp</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xl-3">
+                        <div class="footer-item d-flex flex-column">
+                            <h4 class="mb-4 text-white">Our Services</h4>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> Ocean Turtle</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> White Tiger</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> Social Ecology</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> Loneliness</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> Beauty of Life</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> Present for You</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xl-3">
+                        <div class="footer-item d-flex flex-column">
+                            <h4 class="mb-4 text-white">Volunteer</h4>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> Karen Dawson</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> Jack Simmons</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> Michael Linden</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> Simon Green</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> Natalie Channing</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> Caroline Gerwig</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xl-3">
+                        <div class="footer-item">
+                            <h4 class="mb-4 text-white">Our Gallery</h4>
+                            <div class="row g-2">
+                                <div class="col-4">
+                                    <div class="footer-gallery">
+                                        <img src="img/gallery-footer-1.jpg" class="img-fluid w-100" alt="">
+                                        <div class="footer-search-icon">
+                                            <a href="img/gallery-footer-1.jpg" data-lightbox="footerGallery-1" class="my-auto"><i class="fas fa-search-plus text-white"></i></a>
+                                        </div>
+                                    </div>
+                               </div>
+                               <div class="col-4">
+                                    <div class="footer-gallery">
+                                        <img src="img/gallery-footer-2.jpg" class="img-fluid w-100" alt="">
+                                        <div class="footer-search-icon">
+                                            <a href="img/gallery-footer-2.jpg" data-lightbox="footerGallery-2" class="my-auto"><i class="fas fa-search-plus text-white"></i></a>
+                                        </div>
+                                    </div>
+                               </div>
+                                <div class="col-4">
+                                    <div class="footer-gallery">
+                                        <img src="img/gallery-footer-3.jpg" class="img-fluid w-100" alt="">
+                                        <div class="footer-search-icon">
+                                            <a href="img/gallery-footer-3.jpg" data-lightbox="footerGallery-3" class="my-auto"><i class="fas fa-search-plus text-white"></i></a>
+                                        </div>
+                                    </div>
+                               </div>
+                                <div class="col-4">
+                                    <div class="footer-gallery">
+                                        <img src="img/gallery-footer-4.jpg" class="img-fluid w-100" alt="">
+                                        <div class="footer-search-icon">
+                                            <a href="img/gallery-footer-4.jpg" data-lightbox="footerGallery-4" class="my-auto"><i class="fas fa-search-plus text-white"></i></a>
+                                        </div>
+                                    </div>
+                               </div>
+                                <div class="col-4">
+                                    <div class="footer-gallery">
+                                        <img src="img/gallery-footer-5.jpg" class="img-fluid w-100" alt="">
+                                        <div class="footer-search-icon">
+                                            <a href="img/gallery-footer-5.jpg" data-lightbox="footerGallery-5" class="my-auto"><i class="fas fa-search-plus text-white"></i></a>
+                                        </div>
+                                    </div>
+                               </div>
+                               <div class="col-4">
+									<div class="footer-gallery">
+										<img src="img/gallery-footer-6.jpg" class="img-fluid w-100" alt="">
+                                        <div class="footer-search-icon">
+                                            <a href="img/gallery-footer-6.jpg" data-lightbox="footerGallery-6" class="my-auto"><i class="fas fa-search-plus text-white"></i></a>
+                                        </div>
+									</div>
+								</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        Footer End -->
+
+        <!-- Copyright Start -->
+        <div class="container-fluid copyright py-4">
+            <div class="container">
+                <div class="row g-4 align-items-center">
+                    <div class="col-md-4 text-center text-md-start mb-md-0">
+                        <span class="text-body"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Bicentenario</a>, All right reserved.</span>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <a href="#" class="btn-hover-color btn-square text-white me-2"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="btn-hover-color btn-square text-white me-2"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="btn-hover-color btn-square text-white me-2"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="btn-hover-color btn-square text-white me-2"><i class="fab fa-pinterest"></i></a>
+                            <a href="#" class="btn-hover-color btn-square text-white me-0"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center text-md-end text-body">
+                        <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
+                        <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
+                        <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
+                        Diseñado por <a class="border-bottom" href="https://www.google.com/search?q=kelvin+bohn+davisson+vargas+garcia&oq=kelvin+Bohn+Davisson+V&gs_lcrp=EgZjaHJvbWUqBggBEEUYOzIGCAAQRRg5MgYIARBFGDsyBggCEEUYPNIBCDQxMjZqMGo3qAIIsAIB8QWodJi47bL6kg&sourceid=chrome&ie=UTF-8">AITRON</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Copyright End -->
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-primary btn-primary-outline-0 btn-md-square back-to-top"><i class="fa fa-arrow-up"></i></a>   
+
+        
+        <!-- JavaScript Libraries -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+        <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+        <script src="{% static 'lib/counterup/counterup.min.js' %}"></script>
+        <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'lib/lightbox/js/lightbox.min.js' %}"></script>
+        
+
+        <!-- Template Javascript -->
+        <script src="{% static 'js/main.js' %}"></script>
+
+    </body>
+
+</html>
