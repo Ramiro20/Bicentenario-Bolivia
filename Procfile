@@ -1,1 +1,1 @@
-gunicorn webvicentenario.webvicentenario.wsgi:application --bind 0.0.0.0:$PORT
+web: PYTHONPATH=webvicentenario gunicorn webvicentenario.wsgi:application --bind 0.0.0.0:$PORT
