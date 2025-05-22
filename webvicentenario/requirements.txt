@@ -32,7 +32,7 @@ deap==1.4.2
 debugpy==1.8.1
 decorator==5.1.1
 defusedxml==0.7.1
-Django==3.0.7
+django>=3.0,<4.0
 django-crispy-forms==1.8.1
 django-filter==2.2.0
 django-login-required-middleware==0.4
@@ -125,7 +125,7 @@ openpyxl==3.1.2
 orjson==3.10.3
 overrides==7.7.0
 packaging==24.0
-pandas==2.2.2
+pandas==1.0,<2.3
 pandocfilters==1.5.1
 parso==0.8.4
 pdf2image==1.17.0
@@ -161,7 +161,7 @@ python-json-logger==2.0.7
 python-telegram-bot==21.11.1
 pyttsx3==2.98
 pytweening==1.2.0
-pytz==2019.3
+#pytz==2019.3
 #pywin32==306
 pywinpty==2.0.13
 PyYAML==6.0.1
