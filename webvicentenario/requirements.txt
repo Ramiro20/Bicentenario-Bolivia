@@ -117,7 +117,7 @@ networkx==3.3
 nltk==3.8.1
 notebook==7.2.1
 notebook_shim==0.2.4
-numpy==1.26.4
+numpy
 ollama
 openai==0.28.1
 opencv-python==4.11.0.86
