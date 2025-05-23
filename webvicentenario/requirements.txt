@@ -93,7 +93,7 @@ langchain-text-splitters==0.2.2
 langsmith==0.1.94
 lazy-object-proxy==1.4.3
 lazy_loader==0.4
-lxml==5.2.2
+#lxml==5.2.2
 Markdown==3.7
 markdown-it-py==3.0.0
 MarkupSafe==2.1.5
