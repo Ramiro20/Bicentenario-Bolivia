@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-44ol)@cip$8l^rkrqpvdnm-mekiq2&7*h52j6!(*uj3o--&2=k
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','baltoide.com/Bicentenario-Bolivia/']
+ALLOWED_HOSTS = ['localhost','bicentenario-bolivia-production.up.railway.app']
 
 AUTH_USER_MODEL = 'pagina.Usuario'
 # Application definition
