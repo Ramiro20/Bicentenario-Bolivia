@@ -4,8 +4,8 @@ from .models import *
 from datetime import datetime
 
 def index(request):
-    eventos = Evento.objects.order_by('-fecha_inicio')[:3]
-    patrocinadores = PatrocinadorPagina.objects.all()
+    eventos = Evento.objects.order_by('-fecha_inicio')[:3] or []
+    patrocinadores = PatrocinadorPagina.objects.all() or []
     return render(request, 'index.html', {
         'eventos': eventos,
         'patrocinadores': patrocinadores,
