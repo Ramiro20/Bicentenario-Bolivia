@@ -152,6 +152,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage" 
 
+CSRF_TRUSTED_ORIGINS = ['http://*','https://bicentenario-bolivia-production.up.railway.app']
+
 MEDIA_URL = '/media/'
 # Define la ubicación de los archivos multimedia
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
