@@ -3,7 +3,9 @@ anyio==4.9.0
 asgiref==3.8.1
 captcha==0.7.1
 certifi==2025.4.26
+dj-database-url==2.3.0
 charset-normalizer==3.4.2
+dj-database-url==2.3.0
 Django==5.2.1
 django-autoslug==1.9.9
 django-cities-light==3.10.1
@@ -27,9 +29,13 @@ orjson==3.10.3
 packaging==24.2
 pillow==11.2.1
 progressbar2==4.5.0
+psycopg2==2.9.10
 pydantic==2.11.4
 pydantic_core==2.33.2
+python-dotenv==1.1.0
 python-utils==3.9.1
+python-dotenv==1.1.0
+psycopg2==2.9.10
 pytz==2025.2
 PyYAML==6.0.2
 requests==2.32.3
@@ -45,4 +51,3 @@ Unidecode==1.4.0
 urllib3==2.4.0
 whitenoise==6.9.0
 zstandard==0.23.0
-

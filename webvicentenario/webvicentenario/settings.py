@@ -11,7 +11,12 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import dj_database_url
+from urllib.parse import urlparse
+from dotenv import load_dotenv
 import os
+
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,10 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-44ol)@cip$8l^rkrqpvdnm-mekiq2&7*h52j6!(*uj3o--&2=k'
+SECRET_KEY = 'e3%d7szb#4692f!lj2-dsl8088#*=n#@rl^-n83_^6mge)7lbx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+
+#ALLOWED_HOSTS = ['*']
 
 ALLOWED_HOSTS = ['localhost','bicentenario-bolivia-production.up.railway.app']
 
@@ -63,7 +70,7 @@ EMAIL_HOST_USER = 'daniel234.davalos@gmail.com'
 #EMAIL_HOST_PASSWORD = 'fnmi cshz axxf cnqw'  # Tu contraseña de aplicación generada en Gmail
 EMAIL_HOST_PASSWORD = 'txth xhmr cjqq xvai'
 DEFAULT_FROM_EMAIL = 'no-reply@miapp.com'
-BASE_URL = 'http://localhost:8000'
+#BASE_URL = 'http://localhost:8000'
 
 
 MIDDLEWARE = [
@@ -100,16 +107,36 @@ WSGI_APPLICATION = 'webvicentenario.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+#}
+print(os.getenv('DATABASEURL'))
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('PGDATABASE', ''),
+        'USER': os.environ.get('PGUSER', ''),
+        'PASSWORD': os.environ.get('PGPASSWORD', ''),
+        'HOST': os.environ.get('PGHOST', ''),
+        'PORT': int(os.environ.get('PGPORT', 5432)),
     }
 }
 
+if 'DATABASES' in os.environ:
+    DATABASES['default'] = dj_database_url.config(
+        conn_max_age=500,
+        conn_health_checks=True,
+    )
 
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
+if 'DATABASES' in os.environ:
+    DATABASES['default'] = dj_database_url.config(
+        conn_max_age=500,
+        conn_health_checks=True,
+    )
 
 AUTH_PASSWORD_VALIDATORS = [
     {
