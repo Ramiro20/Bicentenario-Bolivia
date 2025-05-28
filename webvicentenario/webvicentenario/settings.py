@@ -113,16 +113,16 @@ WSGI_APPLICATION = 'webvicentenario.wsgi.application'
 #        'NAME': BASE_DIR / 'db.sqlite3',
 #    }
 #}
-print(os.getenv('DATABASEURL'))
+print(os.getenv('DATABASE_URL'))
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('PGDATABASE', ''),
-        'USER': os.environ.get('PGUSER', ''),
-        'PASSWORD': os.environ.get('PGPASSWORD', ''),
-        'HOST': os.environ.get('PGHOST', ''),
-        'PORT': int(os.environ.get('PGPORT', 5432)),
+        'NAME': os.environ.get('DB'),
+        'USER': os.environ.get('US'),
+        'PASSWORD': os.environ.get('PASSWORD'),
+        'HOST': os.environ.get('HOST'),
+        'PORT': os.environ.get('PORT'),
     }
 }
 
@@ -130,13 +130,7 @@ if 'DATABASES' in os.environ:
     DATABASES['default'] = dj_database_url.config(
         conn_max_age=500,
         conn_health_checks=True,
-    )
-
-if 'DATABASES' in os.environ:
-    DATABASES['default'] = dj_database_url.config(
-        conn_max_age=500,
-        conn_health_checks=True,
-    )
+    )                                                          
 
 AUTH_PASSWORD_VALIDATORS = [
     {
