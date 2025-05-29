@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.core.paginator import Paginator
 from .models import *
 from datetime import datetime
+from django.http import JsonResponse
+from django.core import serializers
 
 def index(request):
     eventos = Evento.objects.order_by('-fecha_inicio')[:3] 
@@ -11,6 +13,42 @@ def index(request):
         'patrocinadores': patrocinadores,
     })
 
+
+def buscar_eventos_por_fecha(request):
+    if request.method == 'GET':
+        fecha_inicio = request.GET.get('fecha_inicio')
+        fecha_fin = request.GET.get('fecha_fin')
+        
+        try:
+            # Convertir las fechas de string a objetos datetime
+            fecha_inicio_dt = datetime.strptime(fecha_inicio, '%Y-%m-%d').date()
+            fecha_fin_dt = datetime.strptime(fecha_fin, '%Y-%m-%d').date()
+            
+            # Filtrar eventos por rango de fechas
+            eventos = Evento.objects.filter(
+                fecha_inicio__date__gte=fecha_inicio_dt,
+                fecha_inicio__date__lte=fecha_fin_dt
+            ).order_by('fecha_inicio')
+            
+            # Serializar los resultados
+            eventos_data = []
+            for evento in eventos:
+                eventos_data.append({
+                    'id': evento.id,
+                    'titulo': evento.titulo,
+                    'descripcion': evento.descripcion,
+                    'fecha_inicio': evento.fecha_inicio.strftime('%d/%m/%Y %H:%M'),
+                    'fecha_fin': evento.fecha_fin.strftime('%d/%m/%Y %H:%M'),
+                    'categoria': evento.get_categoria_display(),
+                    'modalidad': evento.modalidad
+                })
+            
+            return JsonResponse({'eventos': eventos_data})
+            
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+    
+    return JsonResponse({'error': 'Método no permitido'}, status=405)
 
 def consejo(request):
     consejo = ConsejoNacional.objects.all()
