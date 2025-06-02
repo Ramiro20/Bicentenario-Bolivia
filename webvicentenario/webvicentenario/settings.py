@@ -28,11 +28,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'e3%d7szb#4692f!lj2-dsl8088#*=n#@rl^-n83_^6mge)7lbx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+#ALLOWED_HOSTS = ['*']
 
-#ALLOWED_HOSTS = ['*','localhost','bicentenario-bolivia-production.up.railway.app']
+ALLOWED_HOSTS = ['bicentenario-bolivia-production.up.railway.app']
 
 AUTH_USER_MODEL = 'pagina.Usuario'
 # Application definition
@@ -107,24 +107,24 @@ WSGI_APPLICATION = 'webvicentenario.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-print(os.getenv('DATABASE_URL'))
-
 #DATABASES = {
 #    'default': {
-#       'ENGINE': 'django.db.backends.postgresql',
-#       'NAME': os.environ.get('DATABASE'),
-#       'USER': os.environ.get('USER'),
-#       'PASSWORD': os.environ.get('PASSWORD'),
-#       'HOST': os.environ.get('HOST'),
-#       'PORT': os.environ.get('PORT'),
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
 #    }
 #}
+print(os.getenv('DATABASE_URL'))
+
+DATABASES = {
+    'default': {
+       'ENGINE': 'django.db.backends.postgresql',
+       'NAME': os.environ.get('DATABASE'),
+       'USER': os.environ.get('USER'),
+       'PASSWORD': os.environ.get('PASSWORD'),
+       'HOST': os.environ.get('HOST'),
+       'PORT': os.environ.get('PORT'),
+    }
+}
 
 #if 'DATABASES' in os.environ:
 #    DATABASES['default'] = dj_database_url.config(
@@ -173,7 +173,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage" 
 
-#CSRF_TRUSTED_ORIGINS = ['http://*','https://bicentenario-bolivia-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['http://*','https://bicentenario-bolivia-production.up.railway.app']
 
 MEDIA_URL = '/media/'
 # Define la ubicación de los archivos multimedia

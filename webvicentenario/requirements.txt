@@ -3,6 +3,7 @@ anyio==4.9.0
 asgiref==3.8.1
 captcha==0.7.1
 certifi==2025.4.26
+colorama==0.4.6
 dj-database-url==2.3.0
 charset-normalizer==3.4.2
 dj-database-url==2.3.0
@@ -37,6 +38,7 @@ python-utils==3.9.1
 python-dotenv==1.1.0
 psycopg2==2.9.10
 pytz==2025.2
+qrcode==8.2
 PyYAML==6.0.2
 requests==2.32.3
 requests-toolbelt==1.0.0

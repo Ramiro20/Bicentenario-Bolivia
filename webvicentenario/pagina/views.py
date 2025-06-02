@@ -15,44 +15,75 @@ def index(request):
 
 
 def buscar_eventos_por_fecha(request):
+    eventos = []
+    resumen = {}
+    modPresencial = 0
+    modMixto = 0
+    modVirtual = 0
+
     if request.method == 'GET':
         fecha_inicio = request.GET.get('fecha_inicio')
         fecha_fin = request.GET.get('fecha_fin')
-        
-        try:
-            # Convertir las fechas de string a objetos datetime
-            fecha_inicio_dt = datetime.strptime(fecha_inicio, '%Y-%m-%d').date()
-            fecha_fin_dt = datetime.strptime(fecha_fin, '%Y-%m-%d').date()
-            
-            # Filtrar eventos por rango de fechas
-            eventos = Evento.objects.filter(
-                fecha_inicio__date__gte=fecha_inicio_dt,
-                fecha_inicio__date__lte=fecha_fin_dt
-            ).order_by('fecha_inicio')
-            
-            # Serializar los resultados
-            eventos_data = []
-            for evento in eventos:
-                eventos_data.append({
-                    'id': evento.id,
-                    'titulo': evento.titulo,
-                    'descripcion': evento.descripcion,
-                    'fecha_inicio': evento.fecha_inicio.strftime('%d/%m/%Y %H:%M'),
-                    'fecha_fin': evento.fecha_fin.strftime('%d/%m/%Y %H:%M'),
-                    'categoria': evento.get_categoria_display(),
-                    'modalidad': evento.modalidad
-                })
-            
-            return JsonResponse({'eventos': eventos_data})
-            
-        except Exception as e:
-            return JsonResponse({'error': str(e)}, status=400)
-    
-    return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+        if fecha_inicio and fecha_fin:
+            try:
+                fecha_inicio = datetime.strptime(fecha_inicio, '%Y-%m-%d').date()
+                fecha_fin = datetime.strptime(fecha_fin, '%Y-%m-%d').date()
+
+                categorias = ["Academico", "Deportivo", "Feria", "Gastronomico", "Cultural", "Social"]
+                eventos = Evento.objects.filter(
+                    categoria__in=categorias,
+                    fecha_inicio__gte=fecha_inicio,
+                    fecha_fin__lte=fecha_fin
+                ).order_by('fecha_inicio')
+
+                # Contadores
+                resumen = {
+                    "Academico": 0,
+                    "Deportivo": 0,
+                    "Feria": 0,
+                    "Gastronomico": 0,
+                    "Cultural": 0,
+                    "Social": 0,
+                }
+
+                for evento in eventos:
+                    if evento.categoria in resumen:
+                        resumen[evento.categoria] += 1
+
+                for evento in eventos:
+                    if evento.modalidad == "Presencial":
+                        modPresencial += 1
+                    if evento.modalidad == "Mixto":
+                        modMixto += 1
+                    if evento.modalidad == "Virtual":
+                        modVirtual += 1
+
+            except ValueError:
+                pass  # manejar error si es necesario
+
+    return render(request, 'eventos_filtrados.html', {
+        'eventos': eventos,
+        'resumen': resumen,
+        'modPresencial' : modPresencial,
+        'modMixto' : modMixto,
+        'modVirtual' : modVirtual
+    })
 
 def consejo(request):
     consejo = ConsejoNacional.objects.all()
     return render(request, 'consejo.html', {'consejo': consejo})
+
+def generar_qr(texto):
+    """
+    Genera un código QR en formato PNG y lo devuelve como un objeto File listo para guardar.
+    """
+    qr = qrcode.make(texto)
+    buffer = BytesIO()
+    qr.save(buffer, format='PNG')
+    buffer.seek(0)
+    return File(buffer, name='qr.png')
+
 
 def batallas(request):
     eventos = Historia.objects.filter(tipo='batalla').order_by('-fecha')   

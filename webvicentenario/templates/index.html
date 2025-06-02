@@ -602,21 +602,19 @@
        <div class="card shadow-sm mb-5">
     <div class="card-body">
         <h5 class="card-title">Buscar eventos por fecha</h5>
-        <form id="dateSearchForm" class="row g-3">
-            <div class="col-md-5">
-                <label for="startDate" class="form-label">Fecha de inicio</label>
-                <input type="date" class="form-control" id="startDate" required 
-                       value="04-05-2025">
-            </div>
-            <div class="col-md-5">
-                <label for="endDate" class="form-label">Fecha de fin</label>
-                <input type="date" class="form-control" id="endDate" required 
-                       value="04-05-2025">
-            </div>
-            <div class="col-md-2 d-flex align-items-end">
-                <button type="submit" class="btn btn-primary w-100">Buscar</button>
-            </div>
-        </form>
+        <form id="dateSearchForm" method="get" action="{% url 'buscar_eventos_por_fecha' %}" class="row g-3">
+    <div class="col-md-5">
+        <label for="startDate" class="form-label">Fecha de inicio</label>
+        <input type="date" class="form-control" id="startDate" name="fecha_inicio" required>
+    </div>
+    <div class="col-md-5">
+        <label for="endDate" class="form-label">Fecha de fin</label>
+        <input type="date" class="form-control" id="endDate" name="fecha_fin" required>
+    </div>
+    <div class="col-md-2 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary w-100">Buscar</button>
+    </div>
+</form>
     </div>
 </div>
         <!--hasta aqui -->
@@ -625,98 +623,7 @@
 
 <!-- JavaScript para manejar la búsqueda -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('dateSearchForm');
-    const resultsContainer = document.getElementById('resultsContainer');
-    
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const startDate = document.getElementById('startDate').value;
-        const endDate = document.getElementById('endDate').value;
-        
-        // Validación básica
-        if (!startDate || !endDate) {
-            alert('Por favor ingrese ambas fechas');
-            return;
-        }
-        
-        if (startDate > endDate) {
-            alert('La fecha de inicio no puede ser mayor a la fecha de fin');
-            return;
-        }
-        
-        // Mostrar indicador de carga
-        resultsContainer.innerHTML = `
-            <div class="col-12 text-center py-5">
-                <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">Cargando...</span>
-                </div>
-                <p class="mt-2">Buscando eventos...</p>
-            </div>
-        `;
-        
-        // Hacer la petición AJAX
-        fetch(`/buscar-eventos/?fecha_inicio=${startDate}&fecha_fin=${endDate}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    throw new Error(data.error);
-                }
-                displayResults(data.eventos);
-            })
-            .catch(error => {
-                resultsContainer.innerHTML = `
-                    <div class="col-12 text-center py-5">
-                        <p class="text-danger">Error al buscar eventos: ${error.message}</p>
-                    </div>
-                `;
-            });
-    });
-    
-    function displayResults(events) {
-        if (!events || events.length === 0) {
-            resultsContainer.innerHTML = `
-                <div class="col-12 text-center py-5">
-                    <p class="text-muted">No se encontraron eventos en el rango de fechas seleccionado</p>
-                </div>
-            `;
-            return;
-        }
-        
-        let html = '';
-        events.forEach(event => {
-            html += `
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title text-dark fw-bold mb-2" style="font-size: 1.25rem; border-left: 4px solid #0d6efd; padding-left: 10px;">
-                                ${event.titulo}
-                            </h5>
-                            <p class="text-muted mb-1">
-                                <i class="bi bi-calendar-event"></i>
-                                ${event.fecha_inicio} - ${event.fecha_fin}
-                            </p>
-                            <p class="text-muted mb-2">
-                                <i class="bi bi-tag"></i>
-                                ${event.categoria}
-                            </p>
-                            <p class="card-text text-muted mb-3" style="flex-grow: 1;">
-                                ${event.descripcion.length > 100 ? 
-                                    event.descripcion.substring(0, 100) + '...' : 
-                                    event.descripcion
-                                }
-                            </p>
-                            <a href="/evento-detalle/${event.id}" class="btn btn-outline-primary mt-auto align-self-start">Ver detalles</a>
-                        </div>
-                    </div>
-                </div>
-            `;
-        });
-        
-        resultsContainer.innerHTML = html;
-    }
-});
+
 </script>
 
         <!--buscador-->

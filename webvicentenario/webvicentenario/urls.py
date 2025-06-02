@@ -50,7 +50,8 @@ urlpatterns = [
     path('academicoscrud/eliminar-imagen/<int:imagen_id>/', views.eliminar_imagen_evento, name='eliminar_imagen_evento'),
     path('academicoscrud/ver/<int:evento_id>/', views.ver_evento_academico, name='ver_evento_academico'),
 
-
+    #rutas agregadas para consultas
+    path('buscar_eventos/', views.buscar_eventos_por_fecha, name='buscar_eventos_por_fecha'),
 
     path('culturalescrud/', views.culturalescrud, name='culturalescrud'),
     path('culturalescrud/crear/', views.crear_evento_cultural, name='crear_evento_cultural'),

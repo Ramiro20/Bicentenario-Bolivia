@@ -231,6 +231,8 @@ class Evento(models.Model):
     categoria = models.CharField(max_length=20, choices=CategoriaEvento.choices)
     tipo_publico = models.CharField(max_length=10, choices=TipoPublico.choices)
     
+    qr_code = models.ImageField(upload_to='qr_codes/', blank=True, null=True)
+
     lugar = models.ForeignKey(Lugar, on_delete=models.CASCADE, related_name='eventos')
     imagen_principal = models.ImageField(upload_to=evento_imagen_principal_path, blank=True, null=True)
 
